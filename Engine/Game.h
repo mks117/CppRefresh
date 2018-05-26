@@ -37,15 +37,20 @@ private:
 	/********************************/
 	/*  User Functions              */
 	/********************************/
-	void DrawBox(int x, int y, int r, int g, int b);
+	void DrawBox(int x, int y, int r, int g, int b, int s);
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
 	/********************************/
-	int x = 400;
-	int y = 300;
+	int xMobile = 400;
+	int yMobile = 300;
+	int xFixed = 200;
+	int yFixed = 200;
+	int sMobile = 20;
+	int sFixed = 40;
+	bool colliding = false;
 	int vx = 0;
 	int vy = 0;
 	int gb = 255;

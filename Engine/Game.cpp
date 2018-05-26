@@ -103,48 +103,75 @@ void Game::UpdateModel()
 #pragma endregion
 	
 	// apply velocity to x and y positions
-	x += vx;
-	y += vy;
+	xMobile += vx;
+	yMobile += vy;
 
-	if (x + 20 > Graphics::ScreenWidth)
+	if (xMobile + 20 > Graphics::ScreenWidth)
 	{
-		x = Graphics::ScreenWidth - 20;
+		xMobile = Graphics::ScreenWidth - 20;
 		vx = 0;
 	}
 
-	if (x < 0)
+	if (xMobile < 0)
 	{
-		x = 0;
+		xMobile = 0;
 		vx = 0;
 	}
 
-	if (y + 20 > Graphics::ScreenHeight)
+	if (yMobile + 20 > Graphics::ScreenHeight)
 	{
-		y = Graphics::ScreenHeight - 20;
+		yMobile = Graphics::ScreenHeight - 20;
 		vy = 0;
 	}
 
-	if (y < 0)
+	if (yMobile < 0)
 	{
-		y = 0;
+		yMobile = 0;
 		vy = 0;
 	}
+	//
+	if (xMobile <= xFixed + sFixed && xMobile + sMobile >= xFixed
+		&& yMobile <= yFixed + sFixed && yMobile + sMobile >= yFixed)
+	{
+		colliding = true;
+	}
+	else colliding = false;
 
-	
 }
 
 void Game::ComposeFrame()
 {
-	DrawBox(x, y, 255, 255, 255);
-	
+	int rMobile = 255;
+	int gMobile = 255;
+	int bMobile = 255;
+
+	int rFixed;
+	int gFixed;
+	int bFixed;
+
+    if (colliding)
+	{
+		rFixed = 255;
+		gFixed = 0;
+		bFixed = 0;
+	}
+	else
+	{
+		rFixed = 0;
+		gFixed = 255;
+		bFixed = 0;
+	}
+
+	DrawBox(xFixed, yFixed, rFixed, gFixed, bFixed, sFixed);
+	DrawBox(xMobile, yMobile, rMobile, gMobile, bMobile, sMobile);
 }
 
-void Game::DrawBox(int x, int y, int r, int g, int b)
+void Game::DrawBox(int x, int y, int r, int g, int b, int s)
 {
 	gfx.PutPixel(x, y, r, g, b);
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < s; i++)
 	{
-		for (int o = 0; o < 20; o++)
+		for (int o = 0; o < s; o++)
 		{
 			gfx.PutPixel(x + i, y + o, r, g, b);
 		}
