@@ -102,6 +102,7 @@ void Game::UpdateModel()
 	}
 #pragma endregion
 	
+	// apply velocity to x and y positions
 	x += vx;
 	y += vy;
 
