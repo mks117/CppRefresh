@@ -38,6 +38,10 @@ private:
 	/*  User Functions              */
 	/********************************/
 	void DrawBox(int x, int y, int r, int g, int b, int s);
+	int ClampScreenX(int xMobile, int sMobile);
+	int ClampScreenY(int yMobile, int sMobile);
+	bool CollisionDetect(int box0X, int box0Y, int box0S, int box1X, int box1Y, int box1S);
+	void HandleInput();
 private:
 	MainWindow& wnd;
 	Graphics gfx;
@@ -46,10 +50,23 @@ private:
 	/********************************/
 	int xMobile = 400;
 	int yMobile = 300;
-	int xFixed = 200;
-	int yFixed = 200;
 	int sMobile = 20;
-	int sFixed = 40;
+	int xFixed0 = 200;
+	int yFixed0 = 200;
+	int sFixed0 = 40;
+
+	int xFixed1 = 50;
+	int yFixed1 = 200;
+	int sFixed1 = 40;
+
+	int xFixed2 = 200;
+	int yFixed2 = 50;
+	int sFixed2 = 40;
+
+	int xFixed3 = 400;
+	int yFixed3 = 400;
+	int sFixed3 = 40;
+
 	bool colliding = false;
 	int vx = 0;
 	int vy = 0;

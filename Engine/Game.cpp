@@ -38,13 +38,128 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	HandleInput();
+
+	// apply velocity to x and y positions
+	xMobile += vx;
+	yMobile += vy;
+
+	xMobile = ClampScreenX(xMobile, sMobile);
+	yMobile = ClampScreenY(yMobile, sMobile);
+	
+	CollisionDetect(xMobile, yMobile, sMobile, xFixed0, yFixed0, sFixed0);
+
+}
+
+void Game::ComposeFrame()
+{
+	//TODO: Handle collisions on idividual boxes.
+	int rMobile = 255;
+	int gMobile = 255;
+	int bMobile = 255;
+
+	int rFixed;
+	int gFixed;
+	int bFixed;
+
+    if (colliding)
+	{
+		rFixed = 255;
+		gFixed = 0;
+		bFixed = 0;
+	}
+	else
+	{
+		rFixed = 0;
+		gFixed = 255;
+		bFixed = 0;
+	}
+
+	DrawBox(xFixed0, yFixed0, rFixed, gFixed, bFixed, sFixed0);
+	DrawBox(xFixed1, yFixed1, rFixed, gFixed, bFixed, sFixed1);
+	DrawBox(xFixed2, yFixed2, rFixed, gFixed, bFixed, sFixed2);
+	DrawBox(xFixed3, yFixed3, rFixed, gFixed, bFixed, sFixed3);
+	DrawBox(xMobile, yMobile, rMobile, gMobile, bMobile, sMobile);
+}
+
+void Game::DrawBox(int x, int y, int r, int g, int b, int s)
+{
+	gfx.PutPixel(x, y, r, g, b);
+	for (int i = 0; i < s; i++)
+	{
+		for (int o = 0; o < s; o++)
+		{
+			gfx.PutPixel(x + i, y + o, r, g, b);
+		}
+	}
+}
+
+
+int Game::ClampScreenX(int boxX, int boxS)
+{
+	const int left = boxX;
+	const int right = boxX + boxS;
+
+	if (left < 0)
+	{
+		vx = 0;
+		return 0;
+	}
+	else if (right >= gfx.ScreenWidth)
+	{
+		vx = 0;
+		return gfx.ScreenWidth - boxS;
+	}
+	else
+	{
+		return boxX;
+	}
+}
+
+int Game::ClampScreenY(int boxY, int boxS)
+{
+	const int top = boxY;
+	const int bottom = boxY + boxS;
+
+	if (top < 0)
+	{
+		vy = 0;
+		return 0;
+	}
+	else if (bottom >= gfx.ScreenHeight)
+	{
+		vy = 0;
+		return gfx.ScreenHeight - boxS;
+	}
+	else
+	{
+		return boxY;
+	}
+}
+
+
+
+bool Game::CollisionDetect(int box0X, int box0Y, int box0S, int box1X, int box1Y, int box1S)
+{
+	if (box0X <= box1X + box1S && box0X + box0S >= box1X
+		&& box0Y <= box1Y + box1S && box0Y + box0S >= box1Y)
+	{
+		colliding = true;
+	}
+	else colliding = false;
+
+	return colliding;
+}
+
+void Game::HandleInput()
+{
+#pragma region Input
 	// Press Escape to quit app
 	if (wnd.kbd.KeyIsPressed(VK_ESCAPE))
 	{
 		wnd.Kill();
 	}
 
-#pragma region Controls
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
 	{
 		if (inhibitRight) {}
@@ -101,79 +216,5 @@ void Game::UpdateModel()
 		inhibitDown = false;
 	}
 #pragma endregion
-	
-	// apply velocity to x and y positions
-	xMobile += vx;
-	yMobile += vy;
 
-	if (xMobile + sMobile > Graphics::ScreenWidth)
-	{
-		xMobile = Graphics::ScreenWidth - sMobile;
-		vx = 0;
-	}
-
-	if (xMobile < 0)
-	{
-		xMobile = 0;
-		vx = 0;
-	}
-
-	if (yMobile + sMobile > Graphics::ScreenHeight)
-	{
-		yMobile = Graphics::ScreenHeight - sMobile;
-		vy = 0;
-	}
-
-	if (yMobile < 0)
-	{
-		yMobile = 0;
-		vy = 0;
-	}
-	//
-	if (xMobile <= xFixed + sFixed && xMobile + sMobile >= xFixed
-		&& yMobile <= yFixed + sFixed && yMobile + sMobile >= yFixed)
-	{
-		colliding = true;
-	}
-	else colliding = false;
-
-}
-
-void Game::ComposeFrame()
-{
-	int rMobile = 255;
-	int gMobile = 255;
-	int bMobile = 255;
-
-	int rFixed;
-	int gFixed;
-	int bFixed;
-
-    if (colliding)
-	{
-		rFixed = 255;
-		gFixed = 0;
-		bFixed = 0;
-	}
-	else
-	{
-		rFixed = 0;
-		gFixed = 255;
-		bFixed = 0;
-	}
-
-	DrawBox(xFixed, yFixed, rFixed, gFixed, bFixed, sFixed);
-	DrawBox(xMobile, yMobile, rMobile, gMobile, bMobile, sMobile);
-}
-
-void Game::DrawBox(int x, int y, int r, int g, int b, int s)
-{
-	gfx.PutPixel(x, y, r, g, b);
-	for (int i = 0; i < s; i++)
-	{
-		for (int o = 0; o < s; o++)
-		{
-			gfx.PutPixel(x + i, y + o, r, g, b);
-		}
-	}
 }
