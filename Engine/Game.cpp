@@ -106,9 +106,9 @@ void Game::UpdateModel()
 	xMobile += vx;
 	yMobile += vy;
 
-	if (xMobile + 20 > Graphics::ScreenWidth)
+	if (xMobile + sMobile > Graphics::ScreenWidth)
 	{
-		xMobile = Graphics::ScreenWidth - 20;
+		xMobile = Graphics::ScreenWidth - sMobile;
 		vx = 0;
 	}
 
@@ -118,9 +118,9 @@ void Game::UpdateModel()
 		vx = 0;
 	}
 
-	if (yMobile + 20 > Graphics::ScreenHeight)
+	if (yMobile + sMobile > Graphics::ScreenHeight)
 	{
-		yMobile = Graphics::ScreenHeight - 20;
+		yMobile = Graphics::ScreenHeight - sMobile;
 		vy = 0;
 	}
 
