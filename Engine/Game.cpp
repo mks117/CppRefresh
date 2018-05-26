@@ -38,11 +38,13 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	// Press Escape to quit app
 	if (wnd.kbd.KeyIsPressed(VK_ESCAPE))
 	{
 		wnd.Kill();
 	}
 
+#pragma region Controls
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
 	{
 		if (inhibitRight) {}
@@ -98,7 +100,8 @@ void Game::UpdateModel()
 	{
 		inhibitDown = false;
 	}
-
+#pragma endregion
+	
 	x += vx;
 	y += vy;
 
