@@ -39,7 +39,6 @@ private:
 	/********************************/
 	/*  User Functions              */
 	/********************************/
-	void DrawBox(int x, int y, int r, int g, int b, int s);
 	void HandleInput();
 private:
 	MainWindow& wnd;

@@ -1,5 +1,4 @@
 #include "Box.h"
-#include "Graphics.h"
 
 void Box::Update()
 {
@@ -43,4 +42,16 @@ bool Box::CollisionDetect(Player player)
 	}
 	else isColliding = false;
 	return false;
+}
+
+void Box::Draw(Graphics& gfx) const
+{
+	gfx.PutPixel(x, y, r, g, b);
+	for (int i = 0; i < size; i++)
+	{
+		for (int o = 0; o < size; o++)
+		{
+			gfx.PutPixel(x + i, y + o, r, g, b);
+		}
+	}
 }

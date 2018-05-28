@@ -5,7 +5,7 @@
  *																						  *
  *	This file is part of The Chili DirectX Framework.									  *
  *																						  *
- *	The Chili DirectX Framework is free software: you can redistribute it and/or modify	  *
+ *	The Chili DirectX Framework is free software: you can ristribute it and/or modify	  *
  *	it under the terms of the GNU General Public License as published by				  *
  *	the Free Software Foundation, either version 3 of the License, or					  *
  *	(at your option) any later version.													  *
@@ -45,9 +45,9 @@ Game::Game( MainWindow& wnd )
 	box2.vx = 1;
 	box2.vy = -1;
 
-	player.red = 255;
-	player.green = 255;
-	player.blue = 255;
+	player.r = 255;
+	player.g = 255;
+	player.b = 255;
 	
 }
 
@@ -94,59 +94,48 @@ void Game::ComposeFrame()
 {
 	if (box0.isColliding)
 	{
-		box0.red = 255;
-		box0.green = 0;
-		box0.blue = 0;
+		box0.r = 255;
+		box0.g = 0;
+		box0.b = 0;
 	}
 	else
 	{
-		box0.red = 0;
-		box0.green = 255;
-		box0.blue = 0;
+		box0.r = 0;
+		box0.g = 255;
+		box0.b = 0;
 	}
 
 	if (box1.isColliding)
 	{
-		box1.red = 255;
-		box1.green = 0;
-		box1.blue = 0;
+		box1.r = 255;
+		box1.g = 0;
+		box1.b = 0;
 	}
 	else
 	{
-		box1.red = 0;
-		box1.green = 255;
-		box1.blue = 0;
+		box1.r = 0;
+		box1.g = 255;
+		box1.b = 0;
 	}
 	if (box2.isColliding)
 	{
-		box2.red = 255;
-		box2.green = 0;
-		box2.blue = 0;
+		box2.r = 255;
+		box2.g = 0;
+		box2.b = 0;
 	}
 	else
 	{
-		box2.red = 0;
-		box2.green = 255;
-		box2.blue = 0;
+		box2.r = 0;
+		box2.g = 255;
+		box2.b = 0;
 	}
 
-	DrawBox(box0.x, box0.y, box0.red, box0.green, box0.blue, box0.size);
-	DrawBox(box1.x, box1.y, box1.red, box1.green, box1.blue, box1.size);
-	DrawBox(box2.x, box2.y, box2.red, box2.green, box2.blue, box2.size);
-	DrawBox(player.x, player.y, player.red, player.green, player.blue, player.size);
+	box0.Draw(gfx);
+	box1.Draw(gfx);
+	box2.Draw(gfx);
+	player.Draw(gfx);
 }
 
-void Game::DrawBox(int x, int y, int r, int g, int b, int s)
-{
-	gfx.PutPixel(x, y, r, g, b);
-	for (int i = 0; i < s; i++)
-	{
-		for (int o = 0; o < s; o++)
-		{
-			gfx.PutPixel(x + i, y + o, r, g, b);
-		}
-	}
-}
 
 void Game::HandleInput()
 {

@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "Graphics.h"
 
 void Player::ClampToScreen()
 {
@@ -27,5 +26,17 @@ void Player::ClampToScreen()
 	{
 		vy = 0;
 		y = Graphics::ScreenHeight - size;
+	}
+}
+
+void Player::Draw(Graphics& gfx) const
+{
+	gfx.PutPixel(x, y, r, g, b);
+	for (int i = 0; i < size; i++)
+	{
+		for (int o = 0; o < size; o++)
+		{
+			gfx.PutPixel(x + i, y + o, r, g, b);
+		}
 	}
 }
