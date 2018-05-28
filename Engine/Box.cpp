@@ -1,5 +1,13 @@
 #include "Box.h"
 
+Box::Box(int x_in, int y_in, int vx_in, int vy_in)
+{
+	x = x_in;
+	y = y_in;
+	vx = vx_in;
+	vy = vy_in;
+}
+
 void Box::Update()
 {
 	x += vx;
@@ -32,10 +40,10 @@ void Box::Update()
 	}
 }
 
-bool Box::CollisionDetect(Player player)
+bool Box::CollisionDetect(const Player& player)
 {
-	if (x <= player.x + player.size && x + size >= player.x
-		&& y <= player.y + player.size && y + size >= player.y)
+	if (x <= player.GetX() + player.GetSize() && x + size >= player.GetX()
+		&& y <= player.GetY() + player.GetSize() && y + size >= player.GetY())
 	{
 		isColliding = true;
 		return true;
@@ -54,4 +62,14 @@ void Box::Draw(Graphics& gfx) const
 			gfx.PutPixel(x + i, y + o, r, g, b);
 		}
 	}
+}
+
+bool Box::IsColliding() const
+{
+	return isColliding;
+}
+
+void Box::SetColliding(bool colliding)
+{
+	isColliding = colliding;
 }

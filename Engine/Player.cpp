@@ -1,5 +1,6 @@
 #include "Player.h"
 
+
 void Player::ClampToScreen()
 {
 	const int right = x + size;
@@ -39,4 +40,51 @@ void Player::Draw(Graphics& gfx) const
 			gfx.PutPixel(x + i, y + o, r, g, b);
 		}
 	}
+}
+
+void Player::Update(const Keyboard & kbd)
+{
+#pragma region Input
+	// Press Escape to quit app
+
+
+	if (kbd.KeyIsPressed(VK_RIGHT))
+	{
+		vx += speed;
+	}
+
+	if (kbd.KeyIsPressed(VK_LEFT))
+	{
+		vx -= speed;
+	}
+
+	if (kbd.KeyIsPressed(VK_UP))
+	{
+		vy -= speed;
+	}
+
+	if (kbd.KeyIsPressed(VK_DOWN))
+	{
+		vy += speed;
+	}
+#pragma endregion
+
+	// apply velocity to x and y positions
+	x += vx;
+	y += vy;
+}
+
+int Player::GetX() const
+{
+	return x;
+}
+
+int Player::GetY() const
+{
+	return y;
+}
+
+int Player::GetSize() const
+{
+	return size;
 }

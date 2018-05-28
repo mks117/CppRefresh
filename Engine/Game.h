@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "Box.h"
 #include "Player.h"
+#include <random>
 
 class Game
 {
@@ -46,11 +47,19 @@ private:
 	/********************************/
 	/*  User Variables              */
 	/********************************/
-	Player player;
-
+	std::random_device rd;
+	std::mt19937 rng;
+	std::uniform_int_distribution<int> xDist;
+	std::uniform_int_distribution<int> yDist;
 	Box box0;
 	Box box1;
 	Box box2;
-
+	Box box3;
+	Box box4;
+	Box box5;
+	Box box6;
+	Box box7;
+	Box box8;
+	Player player;
 	bool isStarted = false;
 };
