@@ -134,6 +134,7 @@ void Game::ComposeFrame()
 	box1.Draw(gfx);
 	box2.Draw(gfx);
 	player.Draw(gfx);
+
 }
 
 
